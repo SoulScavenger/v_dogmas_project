@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+  Список команд
+{% endblock %}
+{% block content %}
+  {% for command in page_obj %}
+    <article class="mb-5">
+      <div class="col d-flex justify-content-center">
+        <div class="card" style="width: 40rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ command.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              <small>
+                {{ command.created_at|date:"d E Y, H:i" }}<br>
+                От автора <a class="text-muted">@{{ command.author.username }}</a><br>
+                Теги:
+                {%if command.tags.all %} 
+                  {% for tag in command.tags.all %}
+                    <a  class="btn btn-outline-danger btn-sm" href="{% url 'command:tag' tag.slug %}" >{{tag.name|lower}}</a>
+                  {% endfor %}
+                {% else %}
+                  -
+                {% endif %}      
+              </small>
+            </h6>
+            <p class="card-text"><b>Синтаксис:</b></p>
+            <p class="card-text">{{ command.syntax|linebreaksbr }}</p>
+            <p class="card-text"><b>Подробное описание:</b></p>
+            <p class="card-text">{{ command.description|linebreaksbr }}</p>
+            <a class="btn btn-outline-danger btn-sm" href="{% url 'command:detail' command.id %}" >Читать полный текст</a>
+          </div>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+  {% include "includes/paginator.html" %}
+{% endblock %}

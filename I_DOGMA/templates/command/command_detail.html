@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}
+  {{ command.name }} |
+  {{ command.created_at|date:"d E Y" }}
+{% endblock %}
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-body">
+        <h5 class="card-title">{{ command.name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <small>
+            {{ command.created_at|date:"d E Y, H:i" }}<br>
+            От автора <a class="text-muted">@{{ command.author.username }}</a><br>
+            Теги: 
+            {% for tag in command.tags.all %}
+              <a  class="btn btn-outline-danger btn-sm" href="{% url 'command:tag' tag.slug %}">{{tag.name|lower}}</a>
+            {% endfor %}
+          </small>
+        </h6>
+        <p class="card-text"><b>Синтаксис:</b></p>
+        <p class="card-text">{{ command.syntax|linebreaksbr }}</p>
+        <p class="card-text"><b>Изображение:</b></p>
+        {% if command.image %}
+          <a href="{{ command.image.url }}" target="_blank">
+            <img class="border-3 rounded img-fluid img-thumbnail mb-2 mx-auto d-block" src="{{ command.image.url }}">
+          </a>
+        {% else %}
+          <p class="card-text">Отсутствует</p>
+        {% endif %}
+        <p class="card-text"><b>Подробное описание:</b></p>
+        <p class="card-text">{{ command.description|linebreaksbr }}</p>
+        {% if user == command.author %}
+          <div class="mb-2">
+            <a class="btn btn-outline-danger btn-sm" href="{% url 'command:edit' command.id %}" role="button">
+              Редактирова команду
+            </a>
+            <a class="btn btn-outline-danger btn-sm" href="{% url 'command:delete' command.id %}" role="button">
+              Удалить команду
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+

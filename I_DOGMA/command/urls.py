@@ -17,6 +17,9 @@ commands_url = [
     path(
         '<int:pk>/delete/', views.CommandDeleteView.as_view(), name='delete'
     ),
+    path(
+        'search/', views.SearchListView.as_view(), name='search'
+    ),
 ]
 
 urlpatterns = [

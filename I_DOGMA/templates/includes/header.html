@@ -1,28 +1,39 @@
 {% load static %}
 <header>
-    <nav class="navbar navbar-light" style="background-color: black">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'command:index' %}">
-                <img src="{% static 'img/commands_logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-                <font color='white'>Список команд</font>
-            </a>
-        </div>
+  <nav class="navbar navbar-light" style="background-color: black">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'command:index' %}">
+            <img src="{% static 'img/commands_logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            <font color='white'>Список команд</font>
+        </a>
+        <form  method='get' action = {% url 'command:search' %}>
+            <div class="input-group" role="group" aria-label="Basic outlined example">
+              <input type='text' name='query' class="input form-control">
+              <button type="submit" class="btn btn-outline-danger">
+                <a class="text-decoration-none text-reset">
+                  <font color='white'>Поиск</font>
+                </a>
+              </button>
+              |
+            </div>
+        </form>
         {% if user.is_authenticated %}
-        <div class="btn-group" role="group" aria-label="Basic outlined example">
-          <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
-              href="{% url 'command:create' %}">Написать команду</a></button>
-          <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
-              href="{% url 'command:index'%}">{{ user.username }}</a></button>
-          <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
-              href="{% url 'logout' %}">Выйти</a></button>
-        </div>
-      {% else %}
-        <div class="btn-group" role="group" aria-label="Basic outlined example">
+          <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
+                href="{% url 'command:create' %}"><font color='white'>Написать команду</font></a></button>
+            <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
+                href="{% url 'command:index'%}">{{ user.username }}</a></button>
+            <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
+                href="{% url 'logout' %}"><font color='white'>Выйти</font></a></button>
+          </div>
+        {% else %}
+          <div class="btn-group" role="group" aria-label="Basic outlined example">
             <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
                 href="{% url 'login' %}"><font color='white'>Войти</font></a></button>
             <button type="button" class="btn btn-outline-danger"><a class="text-decoration-none text-reset"
                 href="{% url 'user:registration' %}"><font color='white'>Регистрация</font></a></button>
           </div>
         {% endif %}
-    </nav>
+    </div>
+  </nav>
 </header>

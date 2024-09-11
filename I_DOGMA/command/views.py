@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
@@ -7,6 +8,25 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 from command.constants import COMMANDS_PER_PAGE
 from command.forms import CommandForm
 from command.models import Command, Tag
+
+
+class SearchListView(ListView):
+    model = Command
+    paginate_by = 5
+
+    def get_queryset(self):
+        print(self.request.GET.get('query'))
+        query = self.request.GET.get('query')
+        object_list = Command.objects.prefetch_related(
+            'tags'
+        ).select_related('author')
+        filtered_object_list = object_list.filter(
+            Q(name__icontains=query)
+            | Q(tags__name__icontains=query)
+            | Q(author__username__icontains=query)
+        ).distinct()
+        print(filtered_object_list)
+        return filtered_object_list
 
 
 class CommandListView(ListView):

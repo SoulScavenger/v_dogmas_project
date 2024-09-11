@@ -11,7 +11,7 @@ class CommandAdmin(admin.ModelAdmin):
         'name', 'syntax', 'description', 'created_at', 'author', 'get_tags'
     )
     list_editable = ('syntax', 'description')
-    search_fields = ('name', 'author__username', 'tag__name')
+    search_fields = ('name', 'author__username', 'tags__name')
     list_filter = ('tags__name',)
     filter_horizontal = ('tags',)
 

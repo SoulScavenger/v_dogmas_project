@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from command import managers
 User = get_user_model()
 
 
@@ -55,6 +56,9 @@ class Command(models.Model):
         blank=True,
         verbose_name='Тег'
     )
+
+    objects = models.Manager()
+    optimal = managers.OptimalCommandManager()
 
     @func_rename(newname='Теги')
     def get_tags(self):

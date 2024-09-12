@@ -1,6 +1,5 @@
 from rest_framework import generics
 
-
 from api.mixins import CommandAPIMixin, CommandAPICUDMixin, CommandAPIViewMixin
 
 

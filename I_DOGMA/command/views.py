@@ -13,7 +13,7 @@ from command.models import Command, Tag
 
 class SearchListView(ListView):
     model = Command
-    paginate_by = 5
+    paginate_by = COMMANDS_PER_PAGE
 
     def get_queryset(self):
         print(self.request.GET.get('query'))
@@ -26,7 +26,6 @@ class SearchListView(ListView):
             | Q(tags__name__icontains=query)
             | Q(author__username__icontains=query)
         ).distinct()
-        print(filtered_object_list)
         return filtered_object_list
 
 

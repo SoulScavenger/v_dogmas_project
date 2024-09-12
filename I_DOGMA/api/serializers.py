@@ -4,6 +4,8 @@ from command.models import Command
 
 
 class CommandSerializer(serializers.ModelSerializer):
+    """Класс-сериализатор для View/Retrieve функций."""
+
     class Meta:
         fields = ('id',
                   'author',
@@ -14,7 +16,9 @@ class CommandSerializer(serializers.ModelSerializer):
         model = Command
 
 
-class CommandCreateSerializer(serializers.ModelSerializer):
+class CommandCUDSerializer(serializers.ModelSerializer):
+    """Класс-сериализатор для Create/Update/Delete функций."""
+
     class Meta:
         fields = ('author',
                   'name',

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'djoser',
     'command.apps.CommandConfig',
     'user.apps.UserConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [

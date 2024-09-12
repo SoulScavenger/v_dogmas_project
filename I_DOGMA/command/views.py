@@ -4,16 +4,13 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
-from rest_framework import authentication, generics
-from rest_framework.permissions import IsAuthenticated
+
 
 from command.constants import COMMANDS_PER_PAGE
 from command.forms import CommandForm
 from command.models import Command, Tag
-from command.serializers import CommandCreateSerializer, CommandSerializer
 
 
-# CBV
 class SearchListView(ListView):
     model = Command
     paginate_by = 5
@@ -114,48 +111,3 @@ class TagDetailView(ListView):
         context = super().get_context_data(**kwargs)
         context['tag'] = self.tag
         return context
-
-
-# API
-class CommandAPIView(generics.ListAPIView):
-    queryset = Command.optimal.all()
-    serializer_class = CommandSerializer
-    authentication_classes = (authentication.TokenAuthentication,
-                              authentication.SessionAuthentication,
-                              )
-    permission_classes = (IsAuthenticated, )
-
-
-class CommandAPIRetrieve(generics.RetrieveAPIView):
-    queryset = Command.optimal.all()
-    serializer_class = CommandSerializer
-    authentication_classes = (authentication.TokenAuthentication,
-                              authentication.SessionAuthentication,
-                              )
-    permission_classes = (IsAuthenticated, )
-
-
-class CommandAPICreate(generics.ListCreateAPIView):
-    queryset = Command.optimal.all()
-    serializer_class = CommandCreateSerializer
-    authentication_classes = (authentication.TokenAuthentication,
-                              authentication.SessionAuthentication,)
-    permission_classes = (IsAuthenticated, )
-
-
-class CommandAPIUpdate(generics.RetrieveUpdateAPIView):
-    queryset = Command.optimal.all()
-    serializer_class = CommandCreateSerializer
-    authentication_classes = (authentication.TokenAuthentication,
-                              authentication.SessionAuthentication,
-                              )
-    permission_classes = (IsAuthenticated, )
-
-
-class CommandAPIDestroy(generics.RetrieveDestroyAPIView):
-    queryset = Command.optimal.all()
-    serializer_class = CommandSerializer
-    authentication_classes = (authentication.TokenAuthentication,
-                              authentication.SessionAuthentication,
-                              )
-    permission_classes = (IsAuthenticated, )

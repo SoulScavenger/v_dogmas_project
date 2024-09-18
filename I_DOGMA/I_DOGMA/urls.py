@@ -10,7 +10,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/registration/', include('user.urls', namespace='user')),
     path('api/v1/', include('api.urls', namespace='api')),
-    re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/v1/user-auth/', include('rest_framework.urls')),
 ]
 
 if settings.DEBUG:

@@ -155,3 +155,5 @@ sent_emails/
 tokens.py
 data_fill.txt
 updates.json
+III_DOGMA/
+test.sqlite3
